@@ -35,7 +35,7 @@ Write your prompt here!
 > &nbsp;
 > **Tip!**
 >
-> Try starting your prompt with `"Modify the getForecast() method to"` followed by the steps that need to be added to this method.
+> Try starting your prompt with `"Modify the getWeekForecast() method to"` followed by the steps that need to be added to this method.
 > &nbsp;
 
 ## Step 4: Evaluating the Code
@@ -60,7 +60,7 @@ Write your response here!
 
 So the code it gave makes sense . . . now what?? Well, let's add it to our program and see if it works!
 
-✅ **Do This:** Update the `WeatherAPI` and `WeatherApp` classes with the code that needs to be added to implement the desired functionality.
+✅ **Do This:** Update the `AppLogic` class with the code that needs to be added to implement the desired functionality.
 
 Run the app (`App.java`)! Enter a city, then click the **Get 7 Day Forecast** button to view the results. Did it work? Why or why not?
 
