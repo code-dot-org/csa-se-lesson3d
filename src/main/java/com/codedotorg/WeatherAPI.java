@@ -14,6 +14,14 @@ public class WeatherAPI {
     private static final String API_KEY = "06c9c20f4b33a1f5bbec77cc4e4b3171";
     private static final String BASE_URL = "http://api.openweathermap.org/data/2.5/";
     
+    /**
+     * This method retrieves the current weather for a given city using the OpenWeatherMap API.
+     * It takes a city name as a parameter and returns a string with the temperature in Fahrenheit.
+     * If there is an error retrieving the weather, it returns an error message.
+     *
+     * @param city the name of the city to retrieve the weather for
+     * @return a string with the temperature in Fahrenheit or an error message
+     */
     public static String getWeather(String city) {
         try {
             URL apiURL = getAPIUrl(city, "weather");
@@ -32,6 +40,13 @@ public class WeatherAPI {
         }
     }
 
+    /**
+     * Returns the weather forecast for a given city using the OpenWeatherMap API.
+     * 
+     * @param city the name of the city to get the forecast for
+     * @return a string containing the forecast for the next 5 days, with the date
+     *         and temperature in Fahrenheit
+     */
     public static String getForecast(String city) {
         try {
             URL apiURL = getAPIUrl(city, "forecast");
@@ -43,13 +58,29 @@ public class WeatherAPI {
             JSONObject obj = new JSONObject(response.toString());
             JSONArray list = obj.getJSONArray("list");
 
+            StringBuilder forecast = new StringBuilder();
+
+            for (int i = 0; i < list.length(); i++) {
+                JSONObject item = list.getJSONObject(i);
+                JSONObject main = item.getJSONObject("main");
+                double temp = main.getDouble("temp");
+                String date = item.getString("dt_txt");
+                forecast.append(date + ": " + String.format("%.2f", temp) + "°F\n");
+            }
             
-            return "";
+            return forecast.toString();
         } catch (Exception e) {
             return "Error retrieving forecast for " + city;
         }
     }
 
+    /**
+     * Returns the API URL for the given city and endpoint.
+     * 
+     * @param city the name of the city to get the weather data for
+     * @param endpoint the API endpoint to use for retrieving the weather data
+     * @return the URL object representing the API URL for the given city and endpoint
+     */
     private static URL getAPIUrl(String city, String endpoint) {
         URL apiURL = null;
 
@@ -66,6 +97,14 @@ public class WeatherAPI {
         return apiURL;
     }
 
+    /**
+     * This method takes an HttpURLConnection object and retrieves the response from the API.
+     * It reads the input stream from the connection and appends each line to a StringBuffer.
+     * If an exception occurs while reading the input, an error message is printed to the console.
+     * 
+     * @param conn the HttpURLConnection object to retrieve the response from
+     * @return a StringBuffer containing the response from the API
+     */
     private static StringBuffer getResponseFromAPI(HttpURLConnection conn) {
         String inputLine;
         StringBuffer response = new StringBuffer();

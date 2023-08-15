@@ -1,0 +1,63 @@
+/* General styling */
+.root {
+    -fx-font-family: 'Arial', sans-serif;
+    -fx-background-color: #f2f2f2;
+}
+
+/* VBox styles */
+.vbox {
+    -fx-spacing: 15px;
+    -fx-padding: 20px;
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 10, 0, 0, 2);
+}
+
+#titleLabel {
+    -fx-font-size: 30px;
+    -fx-text-fill: #009EB0;
+    -fx-font-weight: bold;
+}
+
+/* HBox styles */
+.hbox {
+    -fx-spacing: 15px;
+}
+
+/* Label styles */
+.label {
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-text-fill: #333;
+}
+
+/* TextField styles */
+.textfield {
+    -fx-padding: 5px 10px;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 3px;
+    -fx-font-size: 14px;
+}
+
+.TextField:focused {
+    -fx-border-color: #009EB0;
+}
+
+/* Button styles */
+.button {
+    -fx-font-weight: bold;
+    -fx-background-color: #009EB0;
+    -fx-text-fill: #fff;
+    -fx-border-radius: 3px;
+    -fx-padding: 8px 15px;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #2980b9;
+}
+
+.button:pressed {
+    -fx-background-color: #2c3e50;
+}

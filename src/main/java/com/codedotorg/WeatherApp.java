@@ -12,55 +12,131 @@ import javafx.stage.Stage;
 
 public class WeatherApp {
 
+    /** The main window to display the app */
     private Stage window;
-    private Label cityLabel;
+
+    /** The width of the primary stage */
+    private int width;
+
+    /** The height of the primary stage */
+    private int height;
+
+    /** The text field for the user to enter the city */
     private TextField cityText;
-    private Button weatherButton;
-    private Button forecastButton;
+
+    /** The label to display the weather */
     private Label weatherLabel;
 
-    public WeatherApp() {
-        this.cityLabel = new Label("Enter city: ");
-        this.cityText = new TextField();
-        this.weatherButton = new Button("Get Weather");
-        this.forecastButton = new Button("Get 7 Day Forecast");
-        this.weatherLabel = new Label();
+    /**
+     * Constructs a new WeatherApp object with the given Stage, width and height.
+     * Initializes the window, width, height, cityText and weatherLabel.
+     *
+     * @param primaryStage the primary stage of the application
+     * @param width the width of the application window
+     * @param height the height of the application window
+     */
+    public WeatherApp(Stage primaryStage, int width, int height) {
+        this.window = primaryStage;
+        this.width = width;
+        this.height = height;
+
+        cityText = new TextField();
+        weatherLabel = new Label();
     }
     
-    public void startApp(Stage primaryStage) {
-        this.window = primaryStage;
+    /**
+     * This method starts the WeatherWise application by setting the title
+     * of the window, creating the button layout, creating the main layout,
+     * creating the scene, and setting the scene and showing it.
+     */
+    public void startApp() {
         window.setTitle("WeatherWise");
 
-        setWeatherButtonAction();
-        setForecastButtonAction();
+        HBox buttonLayout = createButtonLayout();
+        VBox mainLayout = createMainLayout(buttonLayout);
+        Scene mainScene = createScene(mainLayout);
 
-        HBox hbox = new HBox(weatherButton, forecastButton);
-        hbox.setSpacing(10);
-        hbox.setAlignment(Pos.CENTER);
+        setSceneAndShow(mainScene);
+    }
 
-        VBox vbox = new VBox(cityLabel, cityText, hbox, weatherLabel);
-        vbox.setSpacing(10);
-        vbox.setPadding(new Insets(20, 20, 20, 20));
+    /**
+     * Creates a horizontal box layout containing two buttons:
+     * "Get Weather" and "Get 7 Day Forecast".
+     * 
+     * @return the created HBox layout
+     */
+    public HBox createButtonLayout() {
+        Button weatherButton = createButton("Get Weather");
+        Button forecastButton = createButton("Get 7 Day Forecast");
 
-        Scene scene = new Scene(vbox, 500, 500);
-        window.setScene(scene);
+        HBox tempLayout = new HBox(weatherButton, forecastButton);
+
+        tempLayout.setSpacing(10);
+        tempLayout.setAlignment(Pos.CENTER);
+
+        return tempLayout;
+    }
+
+    /**
+     * Creates the main layout of the WeatherApp GUI, which includes a label
+     * prompting the user to enter a city, a text field for the user to enter
+     * the city, a button layout, and a label to display the weather information.
+     *
+     * @param buttonLayout the HBox layout containing the buttons for the GUI
+     * @return the VBox layout containing the main components of the GUI
+     */
+    public VBox createMainLayout(HBox buttonLayout) {
+        Label titleLabel = new Label("WeatherWise");
+        Label cityLabel = new Label("Enter city: ");
+        titleLabel.setId("titleLabel");
+
+        VBox tempLayout = new VBox(titleLabel, cityLabel, cityText, buttonLayout, weatherLabel);
+
+        tempLayout.setSpacing(10);
+        tempLayout.setPadding(new Insets(20, 20, 20, 20));
+
+        return tempLayout;
+    }
+
+    /**
+     * Creates a new Scene object with the specified layout, width, and height.
+     * 
+     * @param currentLayout the layout to be used in the scene
+     * @return the newly created Scene object
+     */
+    public Scene createScene(VBox currentLayout) {
+        Scene tempScene = new Scene(currentLayout, width, height);
+        tempScene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        return tempScene;
+    }
+
+    /**
+     * Sets the current scene and shows the window.
+     * 
+     * @param currentScene the scene to be set and shown
+     */
+    public void setSceneAndShow(Scene currentScene) {
+        window.setScene(currentScene);
         window.show();
     }
 
-    private void setWeatherButtonAction() {
-        weatherButton.setOnAction(event -> {
+    /**
+     * Creates a new button with the given text and sets its action to
+     * update the weather label with the corresponding weather option.
+     * 
+     * @param buttonText the text to display on the button
+     * @return the newly created button
+     */
+    public Button createButton(String buttonText) {
+        Button tempButton = new Button(buttonText);
+        AppLogic logic = new AppLogic();
+
+        tempButton.setOnAction(event -> {
             String city = cityText.getText();
-            String response = WeatherAPI.getWeather(city);
-            weatherLabel.setText(response);
+            weatherLabel.setText(logic.getWeatherOption(city, buttonText));
         });
-    }
 
-    private void setForecastButtonAction() {
-        forecastButton.setOnAction(event -> {
-            
-
-            
-        });
+        return tempButton;
     }
 
 }

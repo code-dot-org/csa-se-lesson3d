@@ -9,8 +9,8 @@ public class App extends Application {
     }
 
     public void start(Stage primaryStage) {
-        WeatherApp weather = new WeatherApp();
-        weather.startApp(primaryStage);
+        WeatherApp weather = new WeatherApp(primaryStage, 500, 500);
+        weather.startApp();
     }
 
 }
