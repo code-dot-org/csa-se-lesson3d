@@ -1,5 +1,5 @@
 module com.codedotorg {
-    requires javafx.controls;
+    requires transitive javafx.controls;
     requires javafx.fxml;
     requires org.json;
 
