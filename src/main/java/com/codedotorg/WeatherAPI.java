@@ -85,7 +85,13 @@ public class WeatherAPI {
         URL apiURL = null;
 
         String url = BASE_URL + endpoint + "?q=" + city;
-        url += "&units=imperial&appid=" + API_KEY;
+        
+        if (endpoint.contains("forecast")) {
+            url += "&units=imperial&cnt=7&appid=" + API_KEY;
+        }
+        else {
+            url += "&units=imperial&appid=" + API_KEY;
+        }
 
         try {
             URI uri = new URI(url);
