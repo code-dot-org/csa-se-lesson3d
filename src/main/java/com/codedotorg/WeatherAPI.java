@@ -49,7 +49,7 @@ public class WeatherAPI {
      */
     public static String getForecast(String city) {
         try {
-            URL apiURL = getAPIUrl(city, "forecast");
+            URL apiURL = getAPIUrl(city, "forecast/daily");
             HttpURLConnection conn = (HttpURLConnection) apiURL.openConnection();
             conn.setRequestMethod("GET");
 
